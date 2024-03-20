@@ -11,7 +11,7 @@ public class Main {
     private static Map<String, String> palabras;
 
     private static void cargarPalabrasDesdeJSON() {
-        try (FileReader reader = new FileReader("C:\\Users\\Carlos\\Desktop\\PracticaIngles\\src\\main\\resources\\palabras.json")) {
+        try (FileReader reader = new FileReader(System.getProperty("user.dir")+"\\src\\main\\resources\\palabras.json")) {
             Gson gson = new Gson();
             palabras = gson.fromJson(reader, new TypeToken<Map<String, String>>(){}.getType());
         } catch (IOException e) {
