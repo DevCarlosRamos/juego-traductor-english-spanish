@@ -9,11 +9,13 @@ import java.util.Scanner;
 
 public class Main {
     private static Map<String, String> palabras;
+    private static int palabrasRestantes;
 
     private static void cargarPalabrasDesdeJSON() {
         try (FileReader reader = new FileReader(System.getProperty("user.dir")+"\\src\\main\\resources\\palabras.json")) {
             Gson gson = new Gson();
             palabras = gson.fromJson(reader, new TypeToken<Map<String, String>>(){}.getType());
+            palabrasRestantes = palabras.size();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -24,7 +26,6 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         String palabra;
-        int palabrasAdivinadas = 0;
 
         do {
             System.out.print("Ingrese una palabra (o presione 'P' para salir): ");
@@ -36,15 +37,17 @@ public class Main {
 
             if (palabras.containsKey(palabra.toLowerCase())) {
                 System.out.println("¡Correcto!");
-                palabrasAdivinadas++;
+                palabrasRestantes--;
 
-                if (palabrasAdivinadas == palabras.size()) {
+                if (palabrasRestantes == 0) {
                     System.out.println("¡Felicidades! ¡Has adivinado todas las palabras!");
                     return;
                 }
             } else {
                 System.out.println("Incorrecto");
             }
+
+            System.out.println("Palabras restantes por adivinar: " + palabrasRestantes);
 
         } while (true);
 
